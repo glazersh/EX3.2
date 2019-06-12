@@ -9,8 +9,15 @@ app.listen(port, function () {
 
 const usersRoutes = require('./routes/users');
 
-
 app.use('/users', usersRoutes);
+
+
+const pointsRoutes = require('./routes/points');
+app.use('/points', pointsRoutes);
+
+const CountriesRoutes = require('./routes/Countries');
+app.use('/Countries', CountriesRoutes);
+
 
 
 
