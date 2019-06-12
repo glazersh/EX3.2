@@ -9,7 +9,7 @@ router.use(express.json());
 
 
 router.get('/getCountries', function(req, res){
-    DButilsAzure.execQuery("SELECT * FROM SELECT * FROM Countries")
+    DButilsAzure.execQuery("SELECT Name FROM Countries")
     .then(function(result){
         res.status(200).send(result)
     })

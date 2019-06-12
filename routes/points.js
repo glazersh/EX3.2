@@ -60,6 +60,17 @@ router.get('/getLastReview', function(req, res){
     })
 })
 
+//8
+router.get('/getCategories', function(req, res){
+    DButilsAzure.execQuery("select categoryName from Categories")
+    .then(function(result){
+        res.send(result)
+    })
+    .catch(function(err){
+        console.log(err)
+        res.send(err)
+    })
+})
 
 
 
