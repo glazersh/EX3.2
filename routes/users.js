@@ -14,9 +14,7 @@ var avg;
 router.post('/addUser', function(req, res){
     if (req.body.q1 == req.body.q2)
     res.status(400).send("please specify 2 different questions");
-if (req.body.cn.length < 2)
-    res.status(400).send("need at least 2 verifing questions");
-    
+
     DButilsAzure.execQuery("INSERT INTO Users values('"+req.body.firstname +
     "','"+req.body.lastname + "','"+req.body.username +"','"+req.body.password + "','"+
     req.body.city + "','" + req.body.Country+ "','" + req.body.email+ "','" + req.body.q1+"','" + req.body.ans1+"','" + req.body.q2+"','" + req.body.ans2+"','" + req.body.cn+"')")
