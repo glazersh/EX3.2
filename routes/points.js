@@ -37,7 +37,7 @@ router.get('/ListOfPoints/:poiName', function(req, res){
 
 //7
 router.get('/getRandomPOI', function(req, res){
-    DButilsAzure.execQuery("SELECT TOP 3 poiName FROM Poi WHERE poiRate > '" + req.body.rank +"'" )
+    DButilsAzure.execQuery("SELECT TOP 3 * FROM Poi WHERE poiRate > 3 " )
     .then(function(result){
         res.send(result)
     })

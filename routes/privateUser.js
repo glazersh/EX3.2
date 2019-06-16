@@ -4,10 +4,11 @@ var DButilsAzure = require('../DButils');
 const router = express.Router();
 var jwt = require('jsonwebtoken');
 var SECRET = 'dorshula';
-var currentUserName;
+var currentUserName='glazersh';
 
 router.use(express.json());
 var avg;
+/*
 router.use('/', (req, res, next) => {
     const token = req.header("x-auth-token")
     // no token
@@ -27,6 +28,7 @@ router.use('/', (req, res, next) => {
         return;
     }
 });
+*/
 // 4
 router.get('/getQuestions/:username', function(req, res){
     DButilsAzure.execQuery("SELECT Question1, Question2 FROM Users WHERE UserName = '"+currentUserName +"'")
