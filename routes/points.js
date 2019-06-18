@@ -72,6 +72,17 @@ router.get('/getCategories', function(req, res){
     })
 })
 
+//12
+router.get('/ListOfPointsByCategory/:cn', function(req, res){
+    DButilsAzure.execQuery("select * from Poi where categoryName = '" + req.params.cn +"'")
+    .then(function(result){
+        res.send(result)
+    })
+    .catch(function(err){
+        console.log(err)
+        res.send(err)
+    })
+})
 
 
 module.exports = router;
