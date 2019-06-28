@@ -86,8 +86,7 @@ router.get('/ListOfPointsByCategory/:cn', function (req, res) {
 
 // update watch
 router.put('/addPoiWatching', function (req, res) {
-    console.log("GHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH")
-    DButilsAzure.execQuery("UPDATE Poi SET poiWatching = poiWatching + 1 WHERE poiName = '" + req.body.poiName + "'")
+    DButilsAzure.execQuery("UPDATE Poi SET poiWatching = poiWatching + 1 WHERE poiName = '" + req.body.poiName + "' SELECT poiWatching FROM Poi WHERE poiName ='" + req.body.poiName + "'")
         .then(function (result) {
             res.send(result)
         })

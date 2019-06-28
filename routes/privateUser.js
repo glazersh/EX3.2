@@ -4,7 +4,7 @@ var DButilsAzure = require('../DButils');
 const router = express.Router();
 var jwt = require('jsonwebtoken');
 var SECRET = 'dorshula';
-var currentUserName='glazersh';
+var currentUserName;
 
 router.use(express.json());
 var avg;
@@ -12,10 +12,14 @@ var avg;
 router.use('/', (req, res, next) => {
     const token = req.header("x-auth-token")
     // no token
+    console.log("heryerte");
+    console.log(token);
     if (!token) {
+        console.log("heryerte");
         res.status(401).json("Access denied. No token provided.");
         return;
     }
+    console.log("heryerte");
     // verify token
     try {
         const decoded = jwt.verify(token, SECRET);
