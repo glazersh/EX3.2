@@ -12,8 +12,6 @@ var avg;
 router.use('/', (req, res, next) => {
     const token = req.header("x-auth-token")
     // no token
-    console.log("heryerte");
-    console.log(token);
     if (!token) {
         console.log("heryerte");
         res.status(401).json("Access denied. No token provided.");
@@ -85,6 +83,17 @@ router.put('/addFavoritePoi', function(req, res){
     })
 })
 
+router.delete('/deleteFavoritePoi', function(req, res){
+    DButilsAzure.execQuery("DELETE FROM  user_poi WHERE UserName = '"+currentUserName +"' and poiName = " + "'" + req.body.poiName  +"'")
+    .then(function(result){
+        res.status(200).json("poi delete");
+    })
+    .catch(function(err){
+        res.status(400).json("something went wrong");
+
+    })
+})
+
 //14
 router.post('/addReview', function (req, res, next) {
     DButilsAzure.execQuery("INSERT INTO PoiReview (poiName, poiReview, UserName, rank)" + 
@@ -102,7 +111,10 @@ router.post('/addReview', function (req, res, next) {
 
 // 15
 router.get('/getFavPois', function(req, res){
-    DButilsAzure.execQuery("SELECT poiName FROM user_poi WHERE UserName = '"+currentUserName +"'")
+    DButilsAzure.execQuery("SELECT Poi.poiName, Poi.poiDescription, Poi.poiRate, Poi.poiWatching, Poi.categoryName, Poi.poiURL " +
+    "FROM user_poi join Poi " +
+    "ON user_poi.poiName = Poi.poiName " +
+    "WHERE user_poi.UserName = '"+currentUserName +"'")
     .then(function(result){
         res.send(result)
     })
