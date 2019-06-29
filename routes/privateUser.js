@@ -12,12 +12,14 @@ var avg;
 router.use('/', (req, res, next) => {
     const token = req.header("x-auth-token")
     // no token
+<<<<<<< HEAD
+=======
+    console.log(token);
+>>>>>>> 176b9989f175438e11b882782011baa8aec0eba5
     if (!token) {
-        console.log("heryerte");
         res.status(401).json("Access denied. No token provided.");
         return;
     }
-    console.log("heryerte");
     // verify token
     try {
         const decoded = jwt.verify(token, SECRET);
@@ -126,7 +128,7 @@ router.get('/getFavPois', function(req, res){
 
 // 12
 router.get('/getLastFavPoi', function(req, res){
-    DButilsAzure.execQuery("SELECT Top 2 poiName FROM user_poi WHERE UserName = '"+currentUserName +"' ORDER BY id DESC")
+    DButilsAzure.execQuery("SELECT Top 2 * FROM user_poi join Poi On user_poi.poiName=Poi.poiName WHERE UserName = '"+currentUserName +"' ORDER BY id DESC")
     .then(function(result){
         res.send(result)
     })
@@ -138,7 +140,7 @@ router.get('/getLastFavPoi', function(req, res){
 
 //10
 router.get('/getRecommendedPoi', function(req, res){
-    DButilsAzure.execQuery(" declare @Category1 varchar(255) declare @Category2 varchar(255) SET @Category1 = (select TOP 1 categoryName from Users where Users.UserName ='" + currentUserName + "'order by categoryName ASC)" + "SET @Category2 = (select TOP 1 categoryName from Users where Users.UserName ='" + currentUserName+"'order by categoryName DESC)"+
+    DButilsAzure.execQuery(" declare @Category1 varchar(255) declare @Category2 varchar(255) SET @Category1 = (select TOP 1 categoryName from Users where Users.UserName ='" + currentUserName + "'order by categoryName ASC)" + "SET @Category2 = (select TOP 1 categoryName2 from Users where Users.UserName ='" + currentUserName+"'order by categoryName DESC)"+
     "select TOP 1 * from Poi where categoryName = @Category1 and poiWatching =(select Max(poiWatching) from Poi where categoryName=@Category1)"+
     "UNION ALL select TOP 1 * from Poi where categoryName = @Category2 and poiWatching = (select Max(poiWatching) from Poi where categoryName = @Category2)")  
         .then(function(result){

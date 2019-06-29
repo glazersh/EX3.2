@@ -34,6 +34,8 @@ router.post('/checkQuestion', function (req, res) {
             if (result[0].Answer1 == req.body.ans1 && result[0].Answer2 == req.body.ans2) {
                 res.send(result[0].Password);
             }
+            else 
+            res.send("wrong answers");
         })
         .catch(function (err) {
             res.status(400).json("Invalid answers");
