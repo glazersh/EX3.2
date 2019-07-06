@@ -14,7 +14,8 @@ router.use('/', (req, res, next) => {
     // no token
     
     if (!token) {
-        res.status(401).json("Access denied. No token provided.");
+        res.status(400).json("Access denied. No token provided.");
+        console.log(token)
         return;
     }
     // verify token
