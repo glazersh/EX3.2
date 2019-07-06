@@ -12,12 +12,10 @@ var avg;
 router.use('/', (req, res, next) => {
     const token = req.header("x-auth-token")
     // no token
-<<<<<<< HEAD
-=======
-    console.log(token);
->>>>>>> 176b9989f175438e11b882782011baa8aec0eba5
+    
     if (!token) {
-        res.status(401).json("Access denied. No token provided.");
+        res.status(400).json("Access denied. No token provided.");
+        console.log(token)
         return;
     }
     // verify token
@@ -163,6 +161,7 @@ router.delete('/removeFavPoi', function(req, res){
 
     })
 })
+
 
 
 

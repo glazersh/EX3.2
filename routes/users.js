@@ -72,6 +72,7 @@ router.post("/login", (req, res) => {
                 if (result[0].Password == req.body.password) {
                     const token = jwt.sign(payload, SECRET, options);
                     res.send(token);
+                    log.console(token)
                 }
             else
             { if (result[0].Password != req.body.password) {
