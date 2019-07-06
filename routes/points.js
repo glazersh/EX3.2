@@ -37,7 +37,20 @@ router.get('/ListOfPoints/:poiName', function (req, res) {
 
 //7
 router.get('/getRandomPOI', function (req, res) {
-    DButilsAzure.execQuery("SELECT TOP 3 * FROM Poi WHERE poiRate > 3 ")
+    DButilsAzure.execQuery("SELECT TOP 3 * FROM Poi WHERE poiRate > 3 order by newid()")
+        .then(function (result) {
+            res.send(result)
+        })
+        .catch(function (err) {
+            console.log(err)
+            res.send(err)
+        })
+})
+
+// update watch
+router.put('/addPoiWatching', function (req, res) {
+    console.log(req.body.poiName)
+    DButilsAzure.execQuery("UPDATE Poi SET poiWatching = poiWatching + 1 WHERE poiName = '" + req.body.poiName + "' SELECT poiWatching FROM Poi WHERE poiName ='" + req.body.poiName + "'")
         .then(function (result) {
             res.send(result)
         })
@@ -48,8 +61,9 @@ router.get('/getRandomPOI', function (req, res) {
 })
 
 //8
-router.get('/getLastReview', function (req, res) {
-    DButilsAzure.execQuery("select Top 2 timeStemp from PoiReview where poiName='" + req.body.poiName + "'" +
+router.get('/getLastReview/:poiName', function (req, res) {
+    console.log(req.params.poiName)
+    DButilsAzure.execQuery("select Top 2 poiReview from PoiReview where poiName='" + req.params.poiName + "'" +
         "order by timeStemp DESC ")
         .then(function (result) {
             res.send(result)
@@ -84,17 +98,7 @@ router.get('/ListOfPointsByCategory/:cn', function (req, res) {
         })
 })
 
-// update watch
-router.put('/addPoiWatching', function (req, res) {
-    DButilsAzure.execQuery("UPDATE Poi SET poiWatching = poiWatching + 1 WHERE poiName = '" + req.body.poiName + "' SELECT poiWatching FROM Poi WHERE poiName ='" + req.body.poiName + "'")
-        .then(function (result) {
-            res.send(result)
-        })
-        .catch(function (err) {
-            console.log(err)
-            res.send(err)
-        })
-})
+
 
 
 module.exports = router;
