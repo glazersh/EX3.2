@@ -17,7 +17,7 @@ router.post('/addUser', function (req, res) {
 
     DButilsAzure.execQuery("INSERT INTO Users values('" + req.body.firstname +
         "','" + req.body.lastname + "','" + req.body.username + "','" + req.body.password + "','" +
-        req.body.city + "','" + req.body.Country + "','" + req.body.email + "','" + req.body.q1 + "','" + req.body.ans1 + "','" + req.body.q2 + "','" + req.body.ans2 + "','" + req.body.cn + "')")
+        req.body.city + "','" + req.body.Country + "','" + req.body.email + "','" + req.body.q1 + "','" + req.body.ans1 + "','" + req.body.q2 + "','" + req.body.ans2 + "','" + req.body.cn + "','" + req.body.cn2 + "')")
         .then(function (result) {
             res.send(result)
         })
@@ -34,8 +34,8 @@ router.post('/checkQuestion', function (req, res) {
             if (result[0].Answer1 == req.body.ans1 && result[0].Answer2 == req.body.ans2) {
                 res.send(result[0].Password);
             }
-            else 
-            res.send("wrong answers");
+            else
+                res.send("wrong answers");
         })
         .catch(function (err) {
             res.status(400).json("Invalid answers");
@@ -68,18 +68,18 @@ router.post("/login", (req, res) => {
             if (result[0] == undefined) {
                 res.send("user name or password are invalid");
             }
-            else 
+            else
                 if (result[0].Password == req.body.password) {
                     const token = jwt.sign(payload, SECRET, options);
                     res.send(token);
                     log.console(token)
                 }
-            else
-            { if (result[0].Password != req.body.password) {
-                res.send("password is wrong");
-            }
-        }
-    })
+                else {
+                    if (result[0].Password != req.body.password) {
+                        res.send("password is wrong");
+                    }
+                }
+        })
         .catch(function (err) {
             console.log(err)
             res.send()
