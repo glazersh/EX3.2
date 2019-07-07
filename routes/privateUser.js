@@ -90,7 +90,7 @@ router.post('/addReview', function (req, res, next) {
     DButilsAzure.execQuery("INSERT INTO PoiReview (poiName, poiReview, UserName, rank)" + 
 "VALUES ('" +  req.body.poiName + "','" + req.body.poiReview + "','" + currentUserName + "','" + req.body.rank + "') UPDATE Poi set poiRate =(SELECT AVG(cast(rank as decimal(10,2)))/5*100 FROM PoiReview WHERE poiName='"+req.body.poiName +"'" +
 ") WHERE poiName ='"+req.body.poiName+"'"+
-"UPDATE Poi set Poi.review2 = Poi.review1, Poi.date_review2 = Poi.date_review1, Poi.review1 = '"+req.body.poiReview+"' where poiName ='"+req.body.poiName+"'")
+"UPDATE Poi set Poi.review2 = Poi.review1, Poi.date_review2 = Poi.date_review1, Poi.review1 = '"+req.body.poiReview+ "',Poi.date_review1 = GETDATE() where poiName ='"+req.body.poiName+"'")
     .then(function(result){
         res.status(200).json("poi removed successfully");
     })
@@ -151,6 +151,17 @@ router.delete('/removeFavPoi', function(req, res){
     .catch(function(err){
         res.status(400).json("something went wrong");
 
+    })
+})
+
+router.get('/getReview', function(req, res){
+    DButilsAzure.execQuery("SELECT poiReview FROM PoiReview WHERE UserName ='"+currentUserName +"'" + " AND poiName ='" + req.body.poiName  +"'")
+    .then(function(result){
+        res.send(result)
+    })
+    .catch(function(err){
+        console.log(err)
+        res.send(err)
     })
 })
 
