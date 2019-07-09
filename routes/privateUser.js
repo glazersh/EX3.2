@@ -31,33 +31,6 @@ router.use('/', (req, res, next) => {
     }
 });
 
-// 4
-router.get('/getQuestions/:username', function(req, res){
-    DButilsAzure.execQuery("SELECT Question1, Question2 FROM Users WHERE UserName = '"+currentUserName +"'")
-    .then(function(result){
-        res.send(result);
-         })
-    .catch(function(err){
-        console.log(err)
-        res.send(err)
-    })
-})
-
-//5
-router.post('/checkQuestion', function(req, res){
-    DButilsAzure.execQuery("SELECT Answer1, Answer2, Password FROM Users WHERE UserName = '"+currentUserName +"'" + " AND Question1 ='" +req.body.q1 +"'"
-    + " AND Question2 ='" +req.body.q2 +"'")
-    .then(function(result){
-        if(result[0].Answer1 == req.body.ans1 && result[0].Answer2 == req.body.ans2 ){
-            res.send(result[0].Password);
-        }
-    })
-    .catch(function(err){
-        res.status(400).json("Invalid answers");
-
-    })
-})
-
 //6
 router.put('/restorePassword', function(req, res){
     DButilsAzure.execQuery("UPDATE Users SET Password='"+req.body.password +"'" + "WHERE UserName  ='" +currentUserName +"'")
@@ -153,19 +126,5 @@ router.delete('/removeFavPoi', function(req, res){
 
     })
 })
-
-router.get('/getReview', function(req, res){
-    DButilsAzure.execQuery("SELECT poiReview FROM PoiReview WHERE UserName ='"+currentUserName +"'" + " AND poiName ='" + req.body.poiName  +"'")
-    .then(function(result){
-        res.send(result)
-    })
-    .catch(function(err){
-        console.log(err)
-        res.send(err)
-    })
-})
-
-
-
 
 module.exports = router;
